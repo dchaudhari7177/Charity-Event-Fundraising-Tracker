@@ -242,5 +242,3 @@ This project demonstrates:
 - Donations are recorded with the current date
 - No external dependencies required
 - Beginner-friendly code with comments
-
-Enjoy learning OOP with the Charity Event Fundraising Tracker! 🎯
