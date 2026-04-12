@@ -1,18 +1,18 @@
 import db.DBConnection;
-import ui.MainWindow;
+import ui.MainWindow_Enhanced;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
 
 /**
- * SwingMain - Entry point for the Swing GUI version of the application
- * Initializes dark theme and launches the main window
+ * SwingMain - Entry point for the Enhanced Swing GUI version
+ * Launches a professional, modern dark-themed fundraising application
  */
 public class SwingMain {
     
     public static void main(String[] args) {
         // Initialize database on startup
-        System.out.println("? Initializing database...");
+        System.out.println("⚙ Initializing database...");
         try {
             DBConnection.getConnection();
             System.out.println("✓ Database initialized successfully!");
@@ -25,17 +25,16 @@ public class SwingMain {
         // Set dark theme (FlatLaf)
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-            System.out.println("✓ Dark theme applied!");
+            System.out.println("✓ Premium dark theme applied!");
         } catch (Exception ex) {
             System.out.println("⚠ Could not apply FlatLaf theme, using default look and feel");
             ex.printStackTrace();
         }
         
-        // Launch GUI on EDT
+        // Launch GUI on EDT with enhanced version
         SwingUtilities.invokeLater(() -> {
-            MainWindow window = new MainWindow();
-            window.setVisible(true);
-            System.out.println("✓ Application started successfully!");
+            new MainWindow_Enhanced();
+            System.out.println("✓ Professional UI initialized and ready!");
         });
     }
 }
