@@ -5,6 +5,10 @@ import ui.EnhancedComponents;
 import dao.EventDAO;
 import dao.DonorDAO;
 import dao.PledgeDAO;
+import model.Pledge;
+import model.Event;
+import observer.DonationObserver;
+import observer.DonationEventManager;
 import java.awt.*;
 
 import javax.swing.*;
@@ -12,9 +16,9 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
 /**
- * Enhanced Statistics Panel - Animated stat cards with real-time data
+ * Enhanced Statistics Panel - Animated stat cards with real-time data and observer pattern
  */
-public class StatisticsPanel_Enhanced extends JPanel {
+public class StatisticsPanel_Enhanced extends JPanel implements DonationObserver {
     
     private JLabel totalEventsLabel;
     private JLabel totalDonorsLabel;
@@ -35,6 +39,9 @@ public class StatisticsPanel_Enhanced extends JPanel {
         add(contentPanel, BorderLayout.CENTER);
         
         loadStatistics();
+        
+        // Subscribe to donation events - Observer Pattern
+        DonationEventManager.getInstance().subscribe(this);
     }
     
     private JPanel createHeaderPanel() {
@@ -181,6 +188,33 @@ public class StatisticsPanel_Enhanced extends JPanel {
         if (totalDonorsLabel != null) totalDonorsLabel.setText(String.valueOf(totalDonors));
         if (totalPledgesLabel != null) totalPledgesLabel.setText(String.valueOf(totalPledges));
         if (totalFundsLabel != null) totalFundsLabel.setText(String.format("₹%.2f", totalFunds));
+    }
+    
+    /**
+     * Observer Pattern: Called when a donation is received
+     * Refreshes statistics to show updated totals
+     */
+    @Override
+    public void onDonationReceived(Pledge pledge, Event event) {
+        loadStatistics();
+    }
+    
+    /**
+     * Observer Pattern: Called when a goal is reached
+     * Refreshes statistics display
+     */
+    @Override
+    public void onGoalReached(Event event) {
+        loadStatistics();
+    }
+    
+    /**
+     * Observer Pattern: Called when event progress is updated
+     * Refreshes statistics
+     */
+    @Override
+    public void onProgressUpdated(Event event, double percentageComplete) {
+        loadStatistics();
     }
     
     public void setOnBack(Runnable callback) { this.onBack = callback; }

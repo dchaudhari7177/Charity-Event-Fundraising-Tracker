@@ -3,7 +3,10 @@ package ui.panels;
 import ui.UIConstants_Enhanced;
 import ui.EnhancedComponents;
 import model.Event;
+import model.Pledge;
 import dao.EventDAO;
+import observer.DonationObserver;
+import observer.DonationEventManager;
 import java.awt.*;
 
 import javax.swing.*;
@@ -14,9 +17,9 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Enhanced View Events Panel - Professional styled table
+ * Enhanced View Events Panel - Professional styled table with observer pattern integration
  */
-public class ViewEventsPanel_Enhanced extends JPanel {
+public class ViewEventsPanel_Enhanced extends JPanel implements DonationObserver {
     
     private JTable eventsTable;
     private JButton backButton;
@@ -37,6 +40,9 @@ public class ViewEventsPanel_Enhanced extends JPanel {
         
         eventDAO = new EventDAO();
         loadEvents();
+        
+        // Subscribe to donation events - Observer Pattern
+        DonationEventManager.getInstance().subscribe(this);
     }
     
     private JPanel createHeaderPanel() {
@@ -150,6 +156,33 @@ public class ViewEventsPanel_Enhanced extends JPanel {
                 status
             });
         }
+    }
+    
+    /**
+     * Observer Pattern: Called when a donation is received
+     * Refreshes the events table to show updated collected amounts
+     */
+    @Override
+    public void onDonationReceived(Pledge pledge, Event event) {
+        loadEvents();
+    }
+    
+    /**
+     * Observer Pattern: Called when a goal is reached
+     * Refreshes the table to show updated status
+     */
+    @Override
+    public void onGoalReached(Event event) {
+        loadEvents();
+    }
+    
+    /**
+     * Observer Pattern: Called when event progress is updated
+     * Refreshes the table to show progress changes
+     */
+    @Override
+    public void onProgressUpdated(Event event, double percentageComplete) {
+        loadEvents();
     }
     
     public void setOnBack(Runnable callback) { this.onBack = callback; }

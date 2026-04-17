@@ -8,6 +8,7 @@ import model.Pledge;
 import dao.DonorDAO;
 import dao.EventDAO;
 import dao.PledgeDAO;
+import service.PledgeService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class MakeDonationPanel_Enhanced extends JPanel {
     private Runnable onBack;
     private DonorDAO donorDAO;
     private EventDAO eventDAO;
-    private PledgeDAO pledgeDAO;
+    private PledgeService pledgeService;
     
     public MakeDonationPanel_Enhanced() {
         setBackground(UIConstants_Enhanced.BG_PRIMARY);
@@ -42,7 +43,7 @@ public class MakeDonationPanel_Enhanced extends JPanel {
         
         donorDAO = new DonorDAO();
         eventDAO = new EventDAO();
-        pledgeDAO = new PledgeDAO();
+        pledgeService = new PledgeService();
         
         loadData();
     }
@@ -209,10 +210,14 @@ public class MakeDonationPanel_Enhanced extends JPanel {
             Donor donor = (Donor) donorCombo.getSelectedItem();
             Event event = (Event) eventCombo.getSelectedItem();
             
-            pledgeDAO.addPledge(new Pledge(donor.getDonorId(), event.getEventId(), amount, java.time.LocalDate.now().toString()));
-            JOptionPane.showMessageDialog(this, "✓ Donation recorded successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            clearFields();
-            loadData();
+            boolean success = pledgeService.makeDonation(donor.getDonorId(), event.getEventId(), amount, java.time.LocalDate.now().toString());
+            if (success) {
+                JOptionPane.showMessageDialog(this, "✓ Donation recorded successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                clearFields();
+                loadData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to record donation", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid amount!", "Error", JOptionPane.ERROR_MESSAGE);
         }
