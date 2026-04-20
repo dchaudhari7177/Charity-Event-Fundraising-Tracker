@@ -3,6 +3,7 @@ package db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -104,6 +105,28 @@ public class DBConnection {
                     "FOREIGN KEY (event_id) REFERENCES events(id))";
             stmt.executeUpdate(createPledgesTable);
             System.out.println("✓ Pledges table ready.");
+
+            // Create admins table
+            String createAdminsTable = "CREATE TABLE IF NOT EXISTS admins (" +
+                    "admin_id INT AUTO_INCREMENT PRIMARY KEY, " +
+                    "username VARCHAR(50) NOT NULL UNIQUE, " +
+                    "password VARCHAR(100) NOT NULL, " +
+                    "email VARCHAR(100), " +
+                    "full_name VARCHAR(100) NOT NULL, " +
+                    "is_active BOOLEAN DEFAULT 1, " +
+                    "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+            stmt.executeUpdate(createAdminsTable);
+            System.out.println("✓ Admins table ready.");
+
+            // Insert default admin if table is empty
+            String checkAdminCount = "SELECT COUNT(*) FROM admins";
+            ResultSet rs = stmt.executeQuery(checkAdminCount);
+            if (rs.next() && rs.getInt(1) == 0) {
+                String insertDefaultAdmin = "INSERT INTO admins (username, password, email, full_name) VALUES " +
+                        "('admin', 'admin123', 'admin@charity.com', 'Admin User')";
+                stmt.executeUpdate(insertDefaultAdmin);
+                System.out.println("✓ Default admin created (username: admin, password: admin123)");
+            }
 
             stmt.close();
             System.out.println("\n✓ Database initialization complete!\n");

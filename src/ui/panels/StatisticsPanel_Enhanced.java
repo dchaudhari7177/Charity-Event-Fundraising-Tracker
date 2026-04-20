@@ -218,4 +218,11 @@ public class StatisticsPanel_Enhanced extends JPanel implements DonationObserver
     }
     
     public void setOnBack(Runnable callback) { this.onBack = callback; }
+    
+    /**
+     * Set admin mode (currently just a placeholder for future admin-specific statistics features)
+     */
+    public void setAdminMode(boolean isAdmin) {
+        // Can add admin-specific UI changes here in the future
+    }
 }

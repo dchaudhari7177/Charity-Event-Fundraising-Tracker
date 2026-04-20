@@ -27,6 +27,7 @@ public class ServiceFactory {
     private static EventService eventService;
     private static DonorService donorService;
     private static PledgeService pledgeService;
+    private static AdminService adminService;
     
     /**
      * Factory Method: Get or create EventService
@@ -60,11 +61,22 @@ public class ServiceFactory {
     }
     
     /**
+     * Factory Method: Get or create AdminService
+     */
+    public static AdminService getAdminService() {
+        if (adminService == null) {
+            adminService = new AdminService();
+        }
+        return adminService;
+    }
+    
+    /**
      * Reset all services (useful for testing)
      */
     public static void reset() {
         eventService = null;
         donorService = null;
         pledgeService = null;
+        adminService = null;
     }
 }

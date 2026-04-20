@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="javafx.controller.RegisterDonorController"
+            fitToWidth="true" style="-fx-background-color: #0D111B; -fx-control-inner-background: #0D111B;">
+
+    <VBox alignment="TOP_CENTER" spacing="32" style="-fx-padding: 32; -fx-background-color: #0D111B;">
+        
+        <!-- Header -->
+        <VBox alignment="CENTER" spacing="8">
+            <Label text="Register New Donor" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+            <Label text="Add a new donor to the system" 
+                   style="-fx-font-size: 14px; -fx-text-fill: #9CA3AF;" />
+        </VBox>
+
+        <!-- Form Card -->
+        <VBox styleClass="form-card" maxWidth="600" alignment="TOP_CENTER">
+            
+            <VBox spacing="16">
+                
+                <!-- Donor Name Field -->
+                <VBox spacing="8">
+                    <Label text="Full Name" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <TextField fx:id="donorNameField" promptText="Enter full name" />
+                    <Label fx:id="donorNameError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Email Field -->
+                <VBox spacing="8">
+                    <Label text="Email Address" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <TextField fx:id="emailField" promptText="Enter email address" />
+                    <Label fx:id="emailError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Phone Field -->
+                <VBox spacing="8">
+                    <Label text="Phone Number" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <TextField fx:id="phoneField" promptText="Enter phone number (10+ digits)" />
+                    <Label fx:id="phoneError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Success Message -->
+                <Label fx:id="successMessage" text="" styleClass="label-success" />
+
+                <!-- Buttons -->
+                <HBox spacing="12" alignment="CENTER">
+                    <Button text="Register Donor" styleClass="btn,btn-success" onAction="#handleRegisterDonor" 
+                            style="-fx-min-width: 150;" />
+                    <Button text="Clear" styleClass="btn,btn-outline" onAction="#handleClear" 
+                            style="-fx-min-width: 150;" />
+                </HBox>
+
+            </VBox>
+
+        </VBox>
+
+    </VBox>
+
+</ScrollPane>

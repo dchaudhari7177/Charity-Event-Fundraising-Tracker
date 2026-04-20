@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="javafx.controller.EventsTableController"
+            fitToWidth="true" style="-fx-background-color: #0D111B; -fx-control-inner-background: #0D111B;">
+
+    <VBox spacing="16" style="-fx-padding: 32; -fx-background-color: #0D111B;">
+        
+        <!-- Header -->
+        <VBox spacing="8">
+            <Label text="All Events" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+            <Label text="View and manage all charity events" 
+                   style="-fx-font-size: 14px; -fx-text-fill: #9CA3AF;" />
+        </VBox>
+
+        <!-- Controls -->
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="Search events..." prefWidth="250" />
+            <Button text="🔄 Refresh" styleClass="btn,btn-primary" onAction="#handleRefresh" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="totalCountLabel" text="Total: 0 events" style="-fx-text-fill: #9CA3AF;" />
+        </HBox>
+
+        <!-- Events Table -->
+        <VBox styleClass="card">
+            <TableView fx:id="eventsTable" styleClass="table-view" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+                    <TableColumn fx:id="nameColumn" text="Event Name" prefWidth="200" />
+                    <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200" />
+                    <TableColumn fx:id="targetColumn" text="Target (₹)" prefWidth="120" />
+                    <TableColumn fx:id="collectedColumn" text="Collected (₹)" prefWidth="120" />
+                    <TableColumn fx:id="progressColumn" text="Progress (%)" prefWidth="100" />
+                </columns>
+            </TableView>
+        </VBox>
+
+    </VBox>
+
+</ScrollPane>

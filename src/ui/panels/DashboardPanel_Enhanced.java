@@ -11,10 +11,13 @@ import java.awt.geom.RoundRectangle2D;
 
 /**
  * Enhanced Dashboard Panel - Professional centered layout with animated action cards
+ * Shows different options for users vs admins
  */
 public class DashboardPanel_Enhanced extends JPanel {
     
     private Runnable onCreateEvent, onRegisterDonor, onMakeDonation, onViewEvents, onViewDonors, onViewStatistics;
+    private JPanel cardsPanel;
+    private boolean isAdminMode = false;
     
     public DashboardPanel_Enhanced() {
         setBackground(UIConstants_Enhanced.BG_PRIMARY);
@@ -70,8 +73,22 @@ public class DashboardPanel_Enhanced extends JPanel {
             UIConstants_Enhanced.PADDING_XLARGE
         ));
         
-        // Action cards grid (2x3 centered)
-        JPanel cardsPanel = new JPanel();
+        // User mode cards (1x2) - Register Donor, Make Donation
+        JPanel userCardsPanel = new JPanel();
+        userCardsPanel.setLayout(new GridLayout(1, 2, UIConstants_Enhanced.MARGIN_XLARGE, UIConstants_Enhanced.MARGIN_XLARGE));
+        userCardsPanel.setBackground(UIConstants_Enhanced.BG_PRIMARY);
+        userCardsPanel.setMaximumSize(new Dimension(UIConstants_Enhanced.WINDOW_WIDTH - 80, 200));
+        
+        userCardsPanel.add(createActionCard("👥 Register Donor", "Register a new donor", UIConstants_Enhanced.ACCENT_CYAN, () -> {
+            if (onRegisterDonor != null) onRegisterDonor.run();
+        }));
+        
+        userCardsPanel.add(createActionCard("💰 Make Donation", "Record a donation pledge", UIConstants_Enhanced.PROGRESS_BLUE, () -> {
+            if (onMakeDonation != null) onMakeDonation.run();
+        }));
+        
+        // Admin mode cards (2x3) - All options
+        cardsPanel = new JPanel();
         cardsPanel.setLayout(new GridLayout(2, 3, UIConstants_Enhanced.MARGIN_XLARGE, UIConstants_Enhanced.MARGIN_XLARGE));
         cardsPanel.setBackground(UIConstants_Enhanced.BG_PRIMARY);
         cardsPanel.setMaximumSize(new Dimension(UIConstants_Enhanced.WINDOW_WIDTH - 80, 400));
@@ -100,7 +117,7 @@ public class DashboardPanel_Enhanced extends JPanel {
             if (onViewStatistics != null) onViewStatistics.run();
         }));
         
-        content.add(cardsPanel);
+        content.add(userCardsPanel);
         content.add(Box.createVerticalGlue());
         
         return content;
@@ -186,6 +203,102 @@ public class DashboardPanel_Enhanced extends JPanel {
         });
         
         return card;
+    }
+    
+    /**
+     * Set admin mode - rebuilds dashboard with appropriate options
+     */
+    public void setAdminMode(boolean isAdmin) {
+        this.isAdminMode = isAdmin;
+        
+        // Remove old content panel (keep header)
+        Component centerComponent = null;
+        for (Component comp : getComponents()) {
+            Object constraint = ((BorderLayout)getLayout()).getConstraints(comp);
+            if (BorderLayout.CENTER.equals(constraint)) {
+                centerComponent = comp;
+                break;
+            }
+        }
+        
+        if (centerComponent != null) {
+            remove(centerComponent);
+        }
+        
+        // Recreate content panel with appropriate mode
+        JPanel contentPanel = createDynamicContentPanel();
+        add(contentPanel, BorderLayout.CENTER);
+        
+        revalidate();
+        repaint();
+    }
+    
+    /**
+     * Create content panel based on current admin mode
+     */
+    private JPanel createDynamicContentPanel() {
+        JPanel content = new JPanel();
+        content.setBackground(UIConstants_Enhanced.BG_PRIMARY);
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setBorder(BorderFactory.createEmptyBorder(
+            UIConstants_Enhanced.PADDING_XLARGE,
+            UIConstants_Enhanced.PADDING_XLARGE,
+            UIConstants_Enhanced.PADDING_XLARGE,
+            UIConstants_Enhanced.PADDING_XLARGE
+        ));
+        
+        if (isAdminMode) {
+            // Admin mode cards (2x3)
+            JPanel adminCardsPanel = new JPanel();
+            adminCardsPanel.setLayout(new GridLayout(2, 3, UIConstants_Enhanced.MARGIN_XLARGE, UIConstants_Enhanced.MARGIN_XLARGE));
+            adminCardsPanel.setBackground(UIConstants_Enhanced.BG_PRIMARY);
+            adminCardsPanel.setMaximumSize(new Dimension(UIConstants_Enhanced.WINDOW_WIDTH - 80, 400));
+            
+            adminCardsPanel.add(createActionCard("📋 Create Event", "Add a new fundraising event", UIConstants_Enhanced.ACCENT_GREEN, () -> {
+                if (onCreateEvent != null) onCreateEvent.run();
+            }));
+            
+            adminCardsPanel.add(createActionCard("👥 Register Donor", "Register a new donor", UIConstants_Enhanced.ACCENT_CYAN, () -> {
+                if (onRegisterDonor != null) onRegisterDonor.run();
+            }));
+            
+            adminCardsPanel.add(createActionCard("💰 Make Donation", "Record a donation pledge", UIConstants_Enhanced.PROGRESS_BLUE, () -> {
+                if (onMakeDonation != null) onMakeDonation.run();
+            }));
+            
+            adminCardsPanel.add(createActionCard("📊 View Events", "See all registered events", UIConstants_Enhanced.ACCENT_YELLOW, () -> {
+                if (onViewEvents != null) onViewEvents.run();
+            }));
+            
+            adminCardsPanel.add(createActionCard("📞 View Donors", "Browse all donors", UIConstants_Enhanced.ACCENT_PURPLE, () -> {
+                if (onViewDonors != null) onViewDonors.run();
+            }));
+            
+            adminCardsPanel.add(createActionCard("📈 Statistics", "View fundraising analytics", UIConstants_Enhanced.SUCCESS_GREEN, () -> {
+                if (onViewStatistics != null) onViewStatistics.run();
+            }));
+            
+            content.add(adminCardsPanel);
+        } else {
+            // User mode cards (1x2)
+            JPanel userCardsPanel = new JPanel();
+            userCardsPanel.setLayout(new GridLayout(1, 2, UIConstants_Enhanced.MARGIN_XLARGE, UIConstants_Enhanced.MARGIN_XLARGE));
+            userCardsPanel.setBackground(UIConstants_Enhanced.BG_PRIMARY);
+            userCardsPanel.setMaximumSize(new Dimension(UIConstants_Enhanced.WINDOW_WIDTH - 80, 200));
+            
+            userCardsPanel.add(createActionCard("👥 Register Donor", "Register a new donor", UIConstants_Enhanced.ACCENT_CYAN, () -> {
+                if (onRegisterDonor != null) onRegisterDonor.run();
+            }));
+            
+            userCardsPanel.add(createActionCard("💰 Make Donation", "Record a donation pledge", UIConstants_Enhanced.PROGRESS_BLUE, () -> {
+                if (onMakeDonation != null) onMakeDonation.run();
+            }));
+            
+            content.add(userCardsPanel);
+        }
+        
+        content.add(Box.createVerticalGlue());
+        return content;
     }
     
     // Setters for callbacks

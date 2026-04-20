@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="javafx.controller.MainController"
+            prefWidth="1400" prefHeight="900" style="-fx-background-color: #0D111B;">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox fx:id="sidebarBox" styleClass="sidebar" spacing="0">
+            <!-- Logo/Title -->
+            <VBox spacing="16" style="-fx-padding: 0 0 24 0; -fx-border-color: #1F2937; -fx-border-width: 0 0 1 0;">
+                <Label text="♠️ CHARITY TRACKER" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00F1FE;" />
+                <Label text="Premium Event Management" style="-fx-font-size: 11px; -fx-text-fill: #6B7280;" />
+            </VBox>
+
+            <!-- Navigation Buttons -->
+            <Button fx:id="navDashboard" text="📊 Dashboard" styleClass="nav-button,active" 
+                    onAction="#showDashboard" style="-fx-text-alignment: left; -fx-font-size: 14px;" wrapText="true" />
+            
+            <Button fx:id="navCreateEvent" text="📅 Create Event" styleClass="nav-button" 
+                    onAction="#showCreateEvent" style="-fx-text-alignment: left; -fx-font-size: 14px;" wrapText="true" />
+            
+            <Button fx:id="navRegisterDonor" text="👤 Register Donor" styleClass="nav-button" 
+                    onAction="#showRegisterDonor" style="-fx-text-alignment: left; -fx-font-size: 14px;" wrapText="true" />
+            
+            <Button fx:id="navRecordDonation" text="💝 Record Donation" styleClass="nav-button" 
+                    onAction="#showRecordDonation" style="-fx-text-alignment: left; -fx-font-size: 14px;" wrapText="true" />
+            
+            <Button fx:id="navViewEvents" text="📋 View Events" styleClass="nav-button" 
+                    onAction="#showViewEvents" style="-fx-text-alignment: left; -fx-font-size: 14px;" wrapText="true" />
+            
+            <Button fx:id="navViewDonors" text="👥 View Donors" styleClass="nav-button" 
+                    onAction="#showViewDonors" style="-fx-text-alignment: left; -fx-font-size: 14px;" wrapText="true" />
+            
+            <Button fx:id="navStatistics" text="📈 Statistics" styleClass="nav-button" 
+                    onAction="#showStatistics" style="-fx-text-alignment: left; -fx-font-size: 14px;" wrapText="true" />
+
+            <!-- Spacer -->
+            <Region VBox.vgrow="ALWAYS" />
+
+            <!-- Footer -->
+            <VBox spacing="8" style="-fx-padding: 16 0 0 0; -fx-border-color: #1F2937; -fx-border-width: 1 0 0 0;">
+                <Label text="v1.0 - JavaFX Edition" style="-fx-font-size: 11px; -fx-text-fill: #6B7280;" />
+                <Label text="© 2024 Charity Tracker" style="-fx-font-size: 10px; -fx-text-fill: #4B5563;" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- CONTENT AREA -->
+    <center>
+        <StackPane fx:id="contentPane" style="-fx-background-color: #0D111B; -fx-padding: 0;">
+            <!-- Dynamic content loaded here -->
+        </StackPane>
+    </center>
+
+</BorderPane>

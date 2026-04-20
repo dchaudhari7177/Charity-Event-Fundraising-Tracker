@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="javafx.controller.CreateEventController"
+            fitToWidth="true" style="-fx-background-color: #0D111B; -fx-control-inner-background: #0D111B;">
+
+    <VBox alignment="TOP_CENTER" spacing="32" style="-fx-padding: 32; -fx-background-color: #0D111B;">
+        
+        <!-- Header -->
+        <VBox alignment="CENTER" spacing="8">
+            <Label text="Create New Event" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+            <Label text="Fill in the details to create a new charity event" 
+                   style="-fx-font-size: 14px; -fx-text-fill: #9CA3AF;" />
+        </VBox>
+
+        <!-- Form Card -->
+        <VBox styleClass="form-card" maxWidth="600" alignment="TOP_CENTER">
+            
+            <VBox spacing="16">
+                
+                <!-- Event Name Field -->
+                <VBox spacing="8">
+                    <Label text="Event Name" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <TextField fx:id="eventNameField" promptText="Enter event name (e.g., Medical Relief Camp)" />
+                    <Label fx:id="eventNameError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Target Amount Field -->
+                <VBox spacing="8">
+                    <Label text="Target Amount (₹)" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <TextField fx:id="targetAmountField" promptText="Enter target amount (e.g., 100000)" />
+                    <Label fx:id="targetAmountError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Description Field -->
+                <VBox spacing="8">
+                    <Label text="Description" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <TextArea fx:id="descriptionArea" promptText="Enter event description..." wrapText="true" 
+                              prefRowCount="4" style="-fx-min-height: 100;" />
+                    <Label fx:id="descriptionError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Success Message -->
+                <Label fx:id="successMessage" text="" styleClass="label-success" />
+
+                <!-- Buttons -->
+                <HBox spacing="12" alignment="CENTER">
+                    <Button text="Create Event" styleClass="btn,btn-success" onAction="#handleCreateEvent" 
+                            style="-fx-min-width: 150;" />
+                    <Button text="Clear" styleClass="btn,btn-outline" onAction="#handleClear" 
+                            style="-fx-min-width: 150;" />
+                </HBox>
+
+            </VBox>
+
+        </VBox>
+
+    </VBox>
+
+</ScrollPane>

@@ -15,6 +15,7 @@ public class SwingMain {
         System.out.println("⚙ Initializing database...");
         try {
             DBConnection.getConnection();
+            DBConnection.initializeDatabase(); // Create tables and default admin
             System.out.println("✓ Database initialized successfully!");
         } catch (Exception e) {
             System.err.println("✗ Database initialization failed: " + e.getMessage());

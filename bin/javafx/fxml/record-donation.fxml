@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="javafx.controller.RecordDonationController"
+            fitToWidth="true" style="-fx-background-color: #0D111B; -fx-control-inner-background: #0D111B;">
+
+    <VBox alignment="TOP_CENTER" spacing="32" style="-fx-padding: 32; -fx-background-color: #0D111B;">
+        
+        <!-- Header -->
+        <VBox alignment="CENTER" spacing="8">
+            <Label text="Record Donation" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+            <Label text="Record a new donation or pledge" 
+                   style="-fx-font-size: 14px; -fx-text-fill: #9CA3AF;" />
+        </VBox>
+
+        <!-- Form Card -->
+        <VBox styleClass="form-card" maxWidth="600" alignment="TOP_CENTER">
+            
+            <VBox spacing="16">
+                
+                <!-- Donor Selection -->
+                <VBox spacing="8">
+                    <Label text="Select Donor" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <ComboBox fx:id="donorComboBox" promptText="Choose a donor..." />
+                    <Label fx:id="donorError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Event Selection -->
+                <VBox spacing="8">
+                    <Label text="Select Event" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <ComboBox fx:id="eventComboBox" promptText="Choose an event..." />
+                    <Label fx:id="eventError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Donation Amount -->
+                <VBox spacing="8">
+                    <Label text="Donation Amount (₹)" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <TextField fx:id="amountField" promptText="Enter amount (e.g., 5000)" />
+                    <Label fx:id="amountError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Donation Date -->
+                <VBox spacing="8">
+                    <Label text="Donation Date" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #E8EAED;" />
+                    <DatePicker fx:id="datePicker" />
+                    <Label fx:id="dateError" text="" styleClass="label-error" />
+                </VBox>
+
+                <!-- Success Message -->
+                <Label fx:id="successMessage" text="" styleClass="label-success" />
+
+                <!-- Buttons -->
+                <HBox spacing="12" alignment="CENTER">
+                    <Button text="Record Donation" styleClass="btn,btn-success" onAction="#handleRecordDonation" 
+                            style="-fx-min-width: 150;" />
+                    <Button text="Clear" styleClass="btn,btn-outline" onAction="#handleClear" 
+                            style="-fx-min-width: 150;" />
+                </HBox>
+
+            </VBox>
+
+        </VBox>
+
+    </VBox>
+
+</ScrollPane>
